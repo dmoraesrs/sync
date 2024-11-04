@@ -1,0 +1,16 @@
+# env
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: plataforma-m-mais-sandbox
+spec:
+  owner: azure_plataformammais_sandbox
+  lifecycle: experimental
+  type: url
+  targets:
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/plataforma-m-mais/catalogos/namespace.yaml
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/plataforma-m-mais/catalogos/sistema.yaml
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/plataforma-m-mais/catalogos/argocd.yaml
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/plataforma-m-mais/catalogos/frontend.yaml
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/plataforma-m-mais/catalogos/istio.yaml
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/plataforma-m-mais/catalogos/az-agent.yaml

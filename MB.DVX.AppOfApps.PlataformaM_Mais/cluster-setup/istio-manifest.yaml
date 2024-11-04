@@ -1,0 +1,64 @@
+# curl -L https://istio.io/downloadIstio | sh -
+# cd istio-1.23.2
+# kubectl create ns istio-system
+# istioctl operator init
+
+# kubectl create -n istio-system secret tls istio-ingressgateway-certs \
+#   --key plataformammais-sandbox.n-mercantil.com.br.key \
+#   --cert  plataformammais-sandbox.n-mercantil.com.br.crt
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-system
+---
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istio-control-plane
+  namespace: istio-system
+spec:
+  profile: default
+  components:
+    ingressGateways:
+      - name: istio-ingressgateway
+        enabled: true
+        k8s:
+          serviceAnnotations:
+            cloud.google.com/load-balancer-type: Internal
+            networking.gke.io/internal-load-balancer-allow-global-access: "true"
+            # networking.gke.io/internal-load-balancer-subnet: "sb-vpc-shd-dev-plat-m-mais-sndbx-services"
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: layer
+                        operator: In
+                        values:
+                          - gateway
+values:
+  gateways:
+    istio-ingressgateway:
+      serviceAnnotations:
+        cloud.google.com/load-balancer-type: Internal
+        networking.gke.io/internal-load-balancer-allow-global-access: "true"
+        # networking.gke.io/internal-load-balancer-subnet: "sb-vpc-shd-dev-plat-m-mais-sndbx-services"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: istio-ingressgateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway # Seleciona o Istio ingress-gateway
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      credentialName: istio-ingressgateway-certs # Nome do secret criado    
+    hosts:
+    - "*" 

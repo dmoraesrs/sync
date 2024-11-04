@@ -1,0 +1,35 @@
+trigger:
+  - main
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+
+parameters:
+- name: choice_system
+  displayName: Choose the system
+  default: plataforma-m-mais
+  type: string
+  values:
+  - plataforma-m-mais
+- name: choice_application
+  displayName: Choose the application
+  default: frontend
+  type: string
+  values:
+  - frontend
+
+resources:
+  repositories:
+    - repository: app-of-apps
+      type: git
+      name: MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
+      ref: 'refs/heads/main'
+    - repository: pipelines
+      type: git
+      name: MB/_git/MB.DVX.CICD.Pipelines.Templates
+      ref: 'refs/heads/main'
+extends:
+  template: resources/pipeline-app-template.yaml@pipelines
+  parameters: 
+    system: ${{ parameters.choice_system }}
+    application: ${{ parameters.choice_application }}

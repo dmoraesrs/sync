@@ -1,0 +1,4 @@
+apiVersion: v2
+name: devops-agent-chart
+description: A Helm chart for Azure DevOps Agent
+version: 0.1.0

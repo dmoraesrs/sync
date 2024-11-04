@@ -1,0 +1,8 @@
+stages:
+- stage: Build
+  jobs: 
+  - template: ../../jobs/applications/build.yaml
+    parameters: 
+      system: ${{ parameters.system }}
+      application: ${{ parameters.application }}
+      

@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: frontend-virtualservice
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/component: frontend
+    argocd.argoproj.io/instance: frontend
+    backstage.io/kubernetes-id: frontend
+spec:
+  hosts:
+    - "{{ .Values.ingress.host }}"
+  gateways:
+    - {{ .Values.ingress.gateway }}
+  http:
+    - match:
+        - uri:
+            prefix: "/"
+      route:
+        - destination:
+            host: frontend-service
+            port:
+              number: 7007

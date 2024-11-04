@@ -1,0 +1,131 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: plataforma-m-mais
+spec:
+  project: default
+  source:
+    repoURL: https://charts.bitnami.com/bitnami
+    chart: grafana-loki
+    targetRevision: 4.6.21
+    helm:
+      values: |
+        replicaCount: 2
+        image:
+          repository: docker.io/bitnami/loki
+          tag: latest
+          pullPolicy: IfNotPresent
+        service:
+          type: ClusterIP
+          port: 3100
+        nodeSelector:
+          layer: apps
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: layer
+                      operator: In
+                      values:
+                        - apps
+        persistence:
+          enabled: true
+          storageClass: "standard"
+          accessModes:
+            - ReadWriteOnce
+          size: 50Gi
+        config:
+          loki:
+            storage_config:
+              boltdb_shipper:
+                active_index_directory: /data/loki/index
+                shared_store: filesystem
+                cache_location: /data/loki/cache
+              filesystem:
+                directory: /data/loki/chunks
+            schema_config:
+              configs:
+                - from: 2023-01-01
+                  store: boltdb-shipper
+                  object_store: filesystem
+                  schema: v11
+                  index:
+                    prefix: index_
+                    period: 24h
+            server:
+              http_listen_port: 3100
+            ingester:
+              lifecycler:
+                ring:
+                  kvstore:
+                    store: memberlist
+                  replication_factor: 1
+            limits_config:
+              enforce_metric_name: false
+              reject_old_samples: true
+              reject_old_samples_max_age: 720h
+        memberlist:
+          join_members:
+            - loki-gossip-ring:7946 
+          bind_port: 7946
+        resources:
+          requests:
+            memory: 256Mi
+            cpu: 100m
+          limits:
+            memory: 512Mi
+            cpu: 200m
+        livenessProbe:
+          httpGet:
+            path: /ready
+            port: 3100
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 3100
+          initialDelaySeconds: 30
+          periodSeconds: 10
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observabilidade
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loki-gossip-ring
+  namespace: observabilidade
+spec:
+  clusterIP: None 
+  ports:
+    - port: 7946
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: loki
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: loki-virtualservice
+  namespace: observabilidade
+spec:
+  hosts:
+    - "loki.plataformammais-sandbox.n-mercantil.com.br"
+  gateways:
+    - istio-system/istio-ingressgateway
+  http:
+    - match:
+        - uri:
+            prefix: "/"
+      route:
+        - destination:
+            host: loki-grafana-loki-querier
+            port:
+              number: 3100

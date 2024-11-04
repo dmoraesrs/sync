@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}
+        image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+        env:
+        - name: AZP_URL
+          value: "{{ .Values.azure.devops.url }}"
+        - name: AZP_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.azure.devops.secretName }}
+              key: pat-token
+        - name: AZP_AGENT_NAME
+          value: "{{ .Values.azure.agent.name }}"
+        - name: AZP_POOL
+          value: "{{ .Values.azure.agent.pool }}"
+        - name: AZP_WORK
+          value: "{{ .Values.azure.agent.workDir }}"
+        volumeMounts:
+        - mountPath: /var/run/docker

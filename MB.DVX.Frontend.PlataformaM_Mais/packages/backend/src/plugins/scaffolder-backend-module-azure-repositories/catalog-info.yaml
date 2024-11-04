@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: scaffolder-backend-module-azure-repositories
+  description: |
+    A collection of Backstage scaffolder backend modules for Azure repositories.
+  tags:
+    - backstage
+    - azure
+    - repositories
+    - plugin
+    - template
+spec:
+  type: library
+  owner: plataforma-m-mais
+  lifecycle: experimental

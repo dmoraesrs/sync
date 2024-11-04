@@ -1,0 +1,20 @@
+trigger:
+  - main
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+resources:
+  repositories:
+    - repository: app-of-apps
+      type: git
+      name: MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
+      ref: 'refs/heads/main'
+    - repository: pipelines
+      type: git
+      name: MB/_git/MB.DVX.CICD.Pipelines.Templates
+      ref: 'refs/heads/main'
+extends:
+  template: resources/pipeline-app-template.yaml@pipelines
+  parameters: 
+    system: ${{ values.system }}
+    application: ${{ values.name }}

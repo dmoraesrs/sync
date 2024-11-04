@@ -1,0 +1,2 @@
+variables:
+  pool_name: $(AGENT_POOL_NAME)

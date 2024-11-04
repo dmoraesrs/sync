@@ -1,0 +1,211 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: dotnet8-template
+  title: Dotnet 8 Template
+  description: Scaffold a new .NET 8 project
+  tags:
+    - dotnet
+    - csharp
+    - webapi
+    - recommended
+spec:
+  owner: azure_plataformammais_sandbox
+  type: service
+  # these are the steps which are rendered in the frontend with the form input
+  # https://backstage.io/docs/features/software-templates/input-examples
+  parameters:
+    - title: Complete the form to create a new .NET 8 project
+      #ui:ObjectFieldTemplate: TwoColumn
+      required:
+        - name
+        - description
+        - system
+      properties:
+        name:
+          type: string
+          title: Project Name
+          description: The name of the project
+          ui:autofocus: true
+          maxLength: 50
+          pattern: '^([-.a-z0-9]+)*$'        
+          #ui:field: ValidateKebabCase # Custom field extension
+        description:
+          title: Description
+          type: string
+          description: A description for the component
+        #owner:
+        #  title: Select in which group the component will be created
+        #  type: string
+        #  description: The group the component belongs to
+        #  ui:field: MyGroupsPicker          
+        system:
+          title: System
+          type: string
+          description: The system the component belongs to
+          ui:field: EntityPicker
+          ui:options:
+            catalogFilter:
+              kind: System
+    #- title: Choose a destination
+    #  required:
+    #    - repoUrl
+    #  properties:
+    #    repoUrl:
+    #      title: Repository URL
+    #      type: string
+    #      description: The URL of the repository
+    #      ui:field: RepoUrlPicker          
+    #      ui:options:
+    #        allowedHosts:
+    #          - devops.mercantil.com.br
+    #        allowedOrganizations:
+    #          - Tecnologia_MB
+    #        allowedOwners: []
+    #        allowedProjects:
+    #          - MB
+    #        allowedRepos: []
+  # here's the steps that are executed in series in the scaffolder backend
+  # You can see all actions you have registered here: http://localhost:3000/create/actions
+  steps:
+    - id: fetch-base
+      name: Fetch Template
+      action: fetch:template
+      input:
+        url: ./skeleton
+        #copyWithoutTemplating:
+        #  - appofapps/kubernetes/helm/templates/*  
+        targetPath: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          owner: azure_plataformammais_sandbox
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          repoUrl: ${{ parameters.repoUrl }}
+          system: ${{ parameters.system | parseEntityRef | pick('name') }}
+
+    - id: publish
+      name: Publish Repo
+      action: publish:azure
+      input:
+        sourcePath: ./skeleton
+        allowedHosts: ["devops.mercantil.com.br"]
+        description: This is ${{ parameters.name }}
+        #repoUrl: ${{ parameters.repoUrl }}
+        repoUrl: devops.mercantil.com.br?repo=MB.DVX.Templates.PlataformaM_Mais.${{ parameters.name }}&organization=Tecnologia_MB&project=MB
+        # repoVisibility: private
+        defaultBranch: main
+        gitCommitMessage: Create scaffold
+        gitAuthorName: ${{ user.entity.metadata.name }}
+        gitAuthorEmail: ${{ user.entity.spec.profile.email }}
+
+    - id: pipeline
+      name: Add Pipeline
+      action: pipeline:azure
+      input:
+        repositoryName: MB.DVX.Templates.PlataformaM_Mais.${{ parameters.name }}
+        repositoryId: ${{ steps['publish'].output.repositoryId }}
+
+    - id: clone-azure-repo
+      name: Clone AppOfApps Repo
+      action: azure:repo:clone
+      input:
+        remoteUrl: "https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais"
+        branch: "main"
+        targetPath: ./appofapps
+
+    - id: fetch-app-of-apps-argocd
+      name: Fetch ArgoCD App Template 
+      action: fetch:template
+      input:
+        url: ./appofapps/app
+        #copyWithoutTemplating:
+        #  - kubernetes/helm/templates/*
+        targetPath: ./appofapps/sistemas/${{ parameters.system | parseEntityRef | pick('name') }}/apps
+        #replace: true
+        values:
+          name: ${{ parameters.name }}
+          owner: azure_plataformammais_sandbox
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          repoUrl: ${{ parameters.repoUrl }}
+          system: ${{ parameters.system | parseEntityRef | pick('name') }}
+
+    - id: fetch-app-of-apps-backstage
+      name: Fetch Backstage Catalog Template 
+      action: fetch:template
+      input:
+        url: ./appofapps/catalogo
+        #copyWithoutTemplating:
+        #  - kubernetes/helm/templates/*
+        targetPath: ./appofapps/sistemas/${{ parameters.system | parseEntityRef | pick('name') }}/catalogos
+        #replace: true
+        values:
+          name: ${{ parameters.name }}
+          owner: azure_plataformammais_sandbox
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          repoUrl: ${{ parameters.repoUrl }}
+          system: ${{ parameters.system | parseEntityRef | pick('name') }}
+
+    - id: fetch-app-of-apps-manifesto
+      name: Fetch Manifesto Template 
+      action: fetch:template
+      input:
+        url: ./appofapps/manifesto
+        copyWithoutTemplating:
+          - templates/*
+        targetPath: ./appofapps/sistemas/${{ parameters.system | parseEntityRef | pick('name') }}/manifestos/${{ parameters.name }}
+        #replace: true
+        values:
+          image: mb.dvx.templates.plataformam_mais.${{ parameters.name }}
+          name: ${{ parameters.name }}
+          owner: azure_plataformammais_sandbox
+          description: ${{ parameters.description }}
+          destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          repoUrl: ${{ parameters.repoUrl }}
+          system: ${{ parameters.system | parseEntityRef | pick('name') }}
+
+    - id: push-azure-repo
+      name: Push new Branch to Remote AppOfApps Repo
+      action: azure:repo:push
+      input:
+        sourcePath: ./appofapps
+        branch: ${{ parameters.name }}
+        gitCommitMessage: Add ${{ parameters.name }} project files
+        gitAuthorName: ${{ user.entity.metadata.name }}
+        gitAuthorEmail: ${{ user.entity.spec.profile.email }}
+
+    - id: pull-request-azur-repo
+      name: Create a Pull Request to AppOfApps Repo
+      action: azure:repo:pr
+      input:
+        server: devops.mercantil.com.br
+        organization: Tecnologia_MB
+        project: MB
+        sourcePath: ./appofapps
+        sourceBranch: ${{ parameters.name }}
+        targetBranch: "main"
+        repoId: b7dd45ce-869b-456f-869e-eded0437c6d1
+        title: Add ${{ parameters.name }} project files
+        gitCommitMessage: Add ${{ parameters.name }} project files
+        gitAuthorName: ${{ user.entity.metadata.name }}
+        gitAuthorEmail: ${{ user.entity.spec.profile.email }}
+        supportsIterations: false
+        autoComplete: true
+
+    - id: register
+      name: Register
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+        catalogInfoPath: "/${{ parameters.name }}-catalog-info.yaml"
+
+  # some outputs which are saved along with the job for use in the frontend
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps['publish'].output.remoteUrl }}
+      - title: Open in catalog
+        icon: catalog
+        entityRef: ${{ steps['register'].output.entityRef }}

@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.name }}
+  description: ${{ values.description }}
+  links:
+    - url: https://${{ values.name }}.plataformammais-sandbox.n-mercantil.com.br
+      title: Open application
+      icon: externalLink
+  annotations:
+    argocd/project: default
+    argocd/app-name: ${{ values.name }}
+    backstage.io/kubernetes-namespace: ${{ values.system }}
+    backstage.io/kubernetes-id: ${{ values.name }}
+    dev.azure.com/project-repo: MB/MB.DVX.Templates.PlataformaM_Mais.${{ values.name }}
+spec:
+  type: service
+  lifecycle: experimental
+  owner: azure_plataformammais_sandbox
+  system: ${{ values.system }}

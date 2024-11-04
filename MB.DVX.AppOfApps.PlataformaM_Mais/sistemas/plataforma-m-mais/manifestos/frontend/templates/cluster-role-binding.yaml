@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: full-read-access-binding
+subjects:
+  - kind: ServiceAccount
+    name: frontend # The service account you want to give access
+    namespace: plataforma-m-mais # Namespace of the service account
+roleRef:
+  kind: ClusterRole
+  name: full-read-access # The name of the ClusterRole created above
+  apiGroup: rbac.authorization.k8s.io

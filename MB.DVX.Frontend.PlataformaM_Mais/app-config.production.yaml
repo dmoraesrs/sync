@@ -1,0 +1,112 @@
+app:
+  title: Plataforma M+
+  # Should be the same as backend.baseUrl when using the `app-backend` plugin.
+  baseUrl: https://plataformammais-sandbox.n-mercantil.com.br
+
+organization:
+  name: Mercantil
+
+backend:
+  # Note that the baseUrl should be the URL that the browser and other clients
+  # should use when communicating with the backend, i.e. it needs to be
+  # reachable not just from within the backend host, but from all of your
+  # callers. When its value is "http://localhost:7007", it's strictly private
+  # and can't be reached by others.
+  baseUrl: https://plataformammais-sandbox.n-mercantil.com.br
+  # The listener can also be expressed as a single <host>:<port> string. In this case we bind to
+  # all interfaces, the most permissive setting. The right value depends on your specific deployment.
+  listen: ':7007'
+  cors:
+    origin: https://plataformammais-sandbox.n-mercantil.com.br
+
+  # config options: https://node-postgres.com/apis/client
+  database:
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+      # https://node-postgres.com/features/ssl
+      # you can set the sslmode configuration option via the `PGSSLMODE` environment variable
+      # see https://www.postgresql.org/docs/current/libpq-ssl.html Table 33.1. SSL Mode Descriptions (e.g. require)
+      # ssl:
+      #   ca: # if you have a CA file and want to verify it you can uncomment this section
+      #     $file: <file-path>/ca/server.crt
+
+auth:
+  providers:
+    microsoft:
+      development:
+        clientId: ${MICROSOFT_ENTRAID_CLIENT_ID}
+        clientSecret: ${MICROSOFT_ENTRAID_CLIENT_SECRET}
+        tenantId: ${AZURE_TENANT_ID}
+        domainHint: ${AZURE_TENANT_ID}
+        signIn:
+          resolvers:
+            - resolver: userIdMatchingUserEntityAnnotation
+
+integrations:
+  azure:
+    - host: devops.mercantil.com.br
+      credentials:
+        - personalAccessToken: ${PERSONAL_ACCESS_TOKEN}
+
+azureDevOps:
+  host: devops.mercantil.com.br
+  organization: Tecnologia_MB
+  token: ${ADO_PAT}
+
+catalog:
+  orphanStrategy: delete
+  providers:
+    microsoftGraphOrg:
+      authority: https://login.microsoftonline.com/${AZURE_TENANT_ID}
+      clientId: ${MICROSOFT_ENTRAID_CLIENT_ID}
+      clientSecret: ${MICROSOFT_ENTRAID_CLIENT_SECRET}
+      tenantId: ${AZURE_TENANT_ID}
+      queryMode: advanced
+      user:
+        loadPhotos: false
+      userGroupMember:
+        filter: "displayName eq 'Azure PlataformaMmais Sandbox'"
+      group:
+        filter: "displayName eq 'Azure PlataformaMmais Sandbox'"
+      schedule:
+        frequency: PT1H
+        timeout: PT50M
+  rules:
+    - allow: [Component, System, API, Resource, Location, Domain, Template, Group, User]
+  # Overrides the default list locations from app-config.yaml as these contain example data.
+  # See https://backstage.io/docs/features/software-catalog/#adding-components-to-the-catalog for more details
+  # on how to get entities into the catalog.
+  locations:
+    # Local example data, replace this with your production config, these are intended for demo use only.
+    # File locations are relative to the backend process, typically in a deployed context, such as in a Docker container, this will be the root
+    #- type: file
+    #  target: ./examples/entities.yaml
+
+    # Local example template
+    #- type: file
+    #  target: ./examples/template/template.yaml
+    #  rules:
+    #    - allow: [Template]
+
+    # Local example organizational data
+    #- type: file
+    #  target: ./examples/org.yaml
+    #  rules:
+    #    - allow: [User, Group]
+
+kubernetes:
+  # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
+  serviceLocatorMethod:
+    type: 'multiTenant'
+  clusterLocatorMethods:
+    - type: 'config'
+      clusters:
+        - url: https://10.192.72.2:443
+          name: default
+          authProvider: 'serviceAccount'
+          skipTLSVerify: true
+          serviceAccountToken: ${SERVICE_ACCOUNT_TOKEN}

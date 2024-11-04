@@ -1,0 +1,16 @@
+# Configuration for the Azure DevOps agent pod
+image:
+  repository: imagensmbprd.azurecr.io/agent
+  tag: 189068
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  name: docker-credentials
+
+url: https://devops.mercantil.com.br/Tecnologia_MB/  # URL of the Azure DevOps organization
+token: ENC[AES256GCM,data:346CBE...,tag:nQL93...]  # Encrypted Personal Access Token (PAT)
+pool: agent-dvx-gke  # Name of the agent pool in Azure DevOps
+
+# Node selector for agent placement (optional)
+nodeSelector:
+  layer: apps

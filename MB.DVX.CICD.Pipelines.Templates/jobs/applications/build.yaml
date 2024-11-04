@@ -1,0 +1,16 @@
+jobs:
+- job: build
+  displayName: Running Build to ${{parameters.application}}  
+  pool: $(pool_name)
+  steps:
+  - checkout: self
+  - checkout: pipelines
+  - template: ../../tasks/applications/create_tag.yaml
+    parameters: 
+      system: ${{ parameters.system }}
+      application: ${{ parameters.application }}
+      tag: $(tag)
+  - template: ../../tasks/applications/docker.yaml
+    parameters: 
+      system: ${{ parameters.system }}
+      application: ${{ parameters.application }}

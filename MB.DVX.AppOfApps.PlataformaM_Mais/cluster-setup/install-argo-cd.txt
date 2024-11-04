@@ -1,0 +1,2 @@
+kubectl create namespace plataforma-m-mais
+kubectl apply -n argocd -f argocd.yaml

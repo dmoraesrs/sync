@@ -1,0 +1,14 @@
+# env
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: observabilidade-sandbox
+spec:
+  owner: azure_plataformammais_sandbox
+  lifecycle: experimental
+  type: url
+  targets:
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/observabilidade/catalogos/namespace.yaml
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/observabilidade/catalogos/sistema.yaml
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/observabilidade/catalogos/grafana.yaml
+    - https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais?path=/sistemas/observabilidade/catalogos/prometheus.yaml

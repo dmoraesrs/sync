@@ -1,0 +1,5 @@
+replicaCount: 2
+
+# Node selector for istio placement (optional)
+nodeSelector:
+  layer: apps

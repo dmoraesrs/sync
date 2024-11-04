@@ -1,0 +1,22 @@
+# application
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: argocd
+  description: Description of argocd
+  #tags:
+  #  - DevOps
+  links:
+    - url: https://argocd.plataformammais-sandbox.n-mercantil.com.br/applications/plataforma-m-mais/argocd
+      title: Open application
+      icon: externalLink
+  annotations:
+    argocd/project: default
+    argocd/app-name: argocd
+    backstage.io/kubernetes-namespace: plataforma-m-mais
+    backstage.io/kubernetes-id: argocd
+spec:
+  type: service
+  lifecycle: experimental
+  owner: azure_plataformammais_sandbox
+  system: plataforma-m-mais

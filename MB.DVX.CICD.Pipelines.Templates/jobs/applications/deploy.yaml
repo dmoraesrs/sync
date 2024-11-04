@@ -1,0 +1,17 @@
+jobs:
+- deployment: deploy
+  displayName: 'Deploy'
+  environment: $(ENVIRONMENT_APPROVE)
+  pool: $(pool_name)
+  condition: succeeded()
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+        - checkout: pipelines
+        - checkout: app-of-apps
+        - template: ../../tasks/applications/publish-argocd.yaml
+          parameters: 
+            system: ${{ parameters.system }}
+            application: ${{ parameters.application }}

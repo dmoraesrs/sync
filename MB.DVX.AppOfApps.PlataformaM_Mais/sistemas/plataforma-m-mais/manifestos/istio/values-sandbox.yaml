@@ -1,0 +1,3 @@
+# Node selector for istio placement (optional)
+nodeSelector:
+  layer: gateway

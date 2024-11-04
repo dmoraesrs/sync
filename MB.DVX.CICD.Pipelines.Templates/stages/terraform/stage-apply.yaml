@@ -1,0 +1,8 @@
+stages:
+- stage: TerraformApply
+  dependsOn: TerraformPlan
+  jobs: 
+  - template: ../../jobs/tf_apply.yaml
+    parameters: 
+      terraform_choice: ${{ parameters.terraform_choice }}
+      terraform_env: ${{ parameters.terraform_env }}

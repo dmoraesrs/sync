@@ -1,0 +1,39 @@
+# application
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: frontend
+  description: Description of frontend
+  #tags:
+  #  - Backstage
+  links:
+    - url: https://argocd.plataformammais-sandbox.n-mercantil.com.br/applications/plataforma-m-mais/frontend
+      title: Open application
+      icon: externalLink
+  annotations:
+    argocd/project: default
+    argocd/app-name: frontend
+    backstage.io/kubernetes-namespace: plataforma-m-mais
+    backstage.io/kubernetes-id: frontend
+    dev.azure.com/project-repo: MB/MB.DVX.Frontend.PlataformaM_Mais
+spec:
+  type: service
+  lifecycle: experimental
+  owner: azure_plataformammais_sandbox
+  system: plataforma-m-mais
+  dependsOn:
+    - resource:default/frontend-db
+---
+# resource
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: frontend-db
+  description: Description of frontend-db
+  #tags:
+  #  - PostgreSQL
+spec:
+  type: database
+  lifecycle: experimental
+  owner: azure_plataformammais_sandbox
+  system: plataforma-m-mais

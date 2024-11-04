@@ -1,0 +1,10 @@
+stages:
+- stage: Deploy
+  condition: succeeded()
+  dependsOn: Build
+  #variables: "$[ dependencies.Build.outputs['build.GetAndSetCommitHash.tag'] ]"
+  jobs: 
+  - template: ../../jobs/applications/deploy.yaml
+    parameters: 
+      system: ${{ parameters.system }}
+      application: ${{ parameters.application }}

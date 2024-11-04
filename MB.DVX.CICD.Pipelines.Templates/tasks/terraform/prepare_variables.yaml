@@ -1,0 +1,7 @@
+steps:
+- script: ls -la
+  workingDirectory: MB.DVX.CICD.Pipelines.Templates
+
+- task: Bash@3
+  inputs:
+    filePath: MB.DVX.CICD.Pipelines.Templates/scripts/prepare_variables.sh

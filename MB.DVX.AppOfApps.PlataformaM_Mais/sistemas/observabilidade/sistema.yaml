@@ -1,0 +1,32 @@
+# apiVersion: v1
+# kind: Namespace
+# metadata:
+#   name: observabilidade
+#   labels:
+#     istio-injection: enabled
+
+# ---
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: observabilidade
+  namespace: observabilidade
+  labels:
+    type: sistema
+spec:
+  project: default
+  source:
+    repoURL: https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
+    path: sistemas/observabilidade/apps
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observabilidade
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - PruneLast=true
+      - CreateNamespace=true

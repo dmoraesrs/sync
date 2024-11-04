@@ -1,0 +1,40 @@
+namespace: plataforma-m-mais
+replicaCount: 2
+
+image:
+  repository: imagensmbprd.azurecr.io/mb.dvx.frontend.plataformam_mais
+  tag: 
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  name: docker-credentials
+
+postgres:
+  host: MTAuMTkyLjMuMjI2
+  port: NTQzMg==
+  user: cGxhdGFmb3JtYS1tLW1haXMtZnJvbnRlbmQ=
+  password: bjM6Yis0TUVKImdiOyZeTQ==
+
+auth:
+  tenantId: NTQ0Y2UxMzMtMGQzOS00Y2JiLTk0MGItMWYwZjI4YTg4YjU5
+  clientId: YzcwZjE5NmUtY2EzNi00NjNlLWI1MmItZDJmMmRhZjVjMmI1
+  clientSecret: c3BWOFF+b29qSzBJd3NXVUlZRkhXcX5pUDJtV1R6MjhXNzRJU2NEUA==
+
+integration:
+  azure:
+    personalAccessToken: cXRjdHA1Y3U2b2FwNzZxN29wZGtxaW9nMzYzdXM2cW03am52ZmVjcW16ajRueHV6N2RocQ==
+
+kubernetes:
+  serviceAccountToken: ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklsbzNjazQyYkZkSk0wZEViVTVuTjFWS1QwTndlVWRQTUdVMVJHUjRlRFZRWDA5S1kybE9VVTR4YWtVaWZRLmV5SnBjM01pT2lKcmRXSmxjbTVsZEdWekwzTmxjblpwWTJWaFkyTnZkVzUwSWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXVZVzFsYzNCaFkyVWlPaUp3YkdGMFlXWnZjbTFoTFcwdGJXRnBjeUlzSW10MVltVnlibVYwWlhNdWFXOHZjMlZ5ZG1salpXRmpZMjkxYm5RdmMyVmpjbVYwTG01aGJXVWlPaUptY205dWRHVnVaQzEwYjJ0bGJpSXNJbXQxWW1WeWJtVjBaWE11YVc4dmMyVnlkbWxqWldGalkyOTFiblF2YzJWeWRtbGpaUzFoWTJOdmRXNTBMbTVoYldVaU9pSm1jbTl1ZEdWdVpDSXNJbXQxWW1WeWJtVjBaWE11YVc4dmMyVnlkbWxqWldGalkyOTFiblF2YzJWeWRtbGpaUzFoWTJOdmRXNTBMblZwWkNJNklqZzBPVEF5TnpCaUxXVmlNVFV0TkdRNE1DMDROMkkyTFdabFl6Y3dZelkzWkdSa05pSXNJbk4xWWlJNkluTjVjM1JsYlRwelpYSjJhV05sWVdOamIzVnVkRHB3YkdGMFlXWnZjbTFoTFcwdGJXRnBjenBtY205dWRHVnVaQ0o5LlBnTmgzWTZwdTk5UFFPMlMyY01lWWt2dU1RNDhJenZQSmtPOTQ5bFhRUEdKX1Y0cUJPdHJoaG1yNkVSdnhMdlAtSUhuTmN4WExDa3o4RS1DSEt5SFNrb2trcHdKNlNCRFBVMlJzREtsUmVRTVZ5cTU0R0ZrV1h0TFFlemVZUjVxVWJtbTNYenpwbTZ4bi1aX2RpbzEwQ0tMRGdaUFgzR2thYklkVlZYYUNjekFldllwdTN0QnVUeXJpMEhHdVFKaWhOUUdiOXBraW5lQkltcG0wb0lza2stc3FqVm9HRTlRS3M0TjFHNDZFc2h3S19LRi1LUlFIWHhUTFVzMW9yZUZvS3hITjk1RVdyY0ZQZXEwSm1hUDBVZmNYLWhyZkNRelptT3QyU3VXX29VZThhYzBMWF8wR25IM0dSelhkSUFVUzF4MkRYSjVyS2E1VFh3dGlnSUFmQQ==
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "200m"
+
+ingress:
+  host: plataformammais-sandbox.n-mercantil.com.br
+  gateway: istio-system/istio-ingressgateway

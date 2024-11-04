@@ -1,0 +1,11 @@
+jobs:
+- job: terraform_plan
+  displayName: Planning on ${{parameters.Environment}}  
+  pool: $(pool_name)
+  steps:
+  - checkout: self
+  - checkout: pipelines
+  - template: ../../tasks/tf_generate_plan.yaml
+    parameters: 
+      terraform_choice: ${{ parameters.terraform_choice }}
+      terraform_env: ${{ parameters.terraform_env }}

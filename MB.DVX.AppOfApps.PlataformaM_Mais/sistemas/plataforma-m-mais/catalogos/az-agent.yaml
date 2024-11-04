@@ -1,0 +1,22 @@
+# application
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: az-agent
+  description: Description of az-agent
+  #tags:
+  #  - DevOps
+  links:
+    - url: https://argocd.plataformammais-sandbox.n-mercantil.com.br/applications/plataforma-m-mais/az-agent
+      title: Open application
+      icon: externalLink
+  annotations:
+    argocd/project: default
+    argocd/app-name: az-agent
+    backstage.io/kubernetes-namespace: plataforma-m-mais
+    backstage.io/kubernetes-id: az-agent
+spec:
+  type: service
+  lifecycle: experimental
+  owner: azure_plataformammais_sandbox
+  system: plataforma-m-mais

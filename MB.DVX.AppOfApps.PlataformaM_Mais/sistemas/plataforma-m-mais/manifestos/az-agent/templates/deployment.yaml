@@ -1,0 +1,82 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: az-agent
+  namespace: plataforma-m-mais
+type: Opaque
+data:
+  AZP_URL: aHR0cHM6Ly9kZXZvcHMubWVyY2FudGlsLmNvbS5ici9UZWNub2xvZ2lhX01CCg==
+  AZP_TOKEN: ZzI3YXg2ZG41aHhxbDRvM3JlNTV5eHM3NGVocnB0bHJhdXFoNTZiaTR1N2F6dXZvendwcQo=
+  AZP_POOL: YWdlbnQtZHZ4LWdrZQo=
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: az-agent-deployment
+  namespace: plataforma-m-mais
+  labels:
+    app: azure-agent-gke-dvx
+    app.kubernetes.io/name: azure-agent-gke-dvx
+    app.kubernetes.io/version: "latest"
+    app.kubernetes.io/instance: azure-agent-gke-dvx
+    app.kubernetes.io/component: azure-agent-gke-dvx
+    argocd.argoproj.io/instance: azure-agent-gke-dvx
+    backstage.io/kubernetes-id: azure-agent-gke-dvx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: azure-agent-gke-dvx
+  template:
+    metadata:
+      labels:
+        app: azure-agent-gke-dvx
+        app.kubernetes.io/component: azure-agent-gke-dvx
+        argocd.argoproj.io/instance: azure-agent-gke-dvx
+        backstage.io/kubernetes-id: azure-agent-gke-dvx
+    spec:
+      containers:
+        - name: kubepodcreation
+          image: imagensmbprd.azurecr.io/agent:189502
+          env:
+            - name: AZP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: az-agent
+                  key: AZP_URL
+            - name: AZP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: az-agent
+                  key: AZP_TOKEN
+            - name: AZP_POOL
+              valueFrom:
+                secretKeyRef:
+                  name: az-agent
+                  key: AZP_POOL
+            - name: DOCKER_HOST
+              value: "unix:///var/run/docker.sock"
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /var/run/docker.sock
+              name: docker-volume
+      volumes:
+        - name: docker-volume
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: layer
+                    operator: In
+                    values:
+                      - apps
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: docker-credentials

@@ -1,0 +1,16 @@
+jobs:
+- deployment: terraform_apply_deployment
+  displayName: 'Terraform_Apply'
+  environment: $(ENVIRONMENT_APPROVE)
+  pool: $(pool_name)
+  condition: succeeded()
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - checkout: self
+        - checkout: pipelines
+        - template: ../../tasks/tf_apply.yaml
+          parameters: 
+            terraform_choice: ${{ parameters.terraform_choice }}
+            terraform_env: ${{ parameters.terraform_env }}

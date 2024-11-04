@@ -1,0 +1,25 @@
+parameters:
+- name: system
+  type: string
+  default: null
+- name: application
+  type: string
+  default: null
+  
+trigger:
+- main
+
+variables:
+- template: ../variables/variables-azurePipelines.yaml
+- group: Deploy DevOps
+- group: Teste-DevEx
+
+stages:
+- template: ../stages/applications/stage-build.yaml@pipelines
+  parameters: 
+    system: ${{ parameters.system}}
+    application: ${{ parameters.application }}
+- template: ../stages/applications/stage-deploy.yaml@pipelines
+  parameters: 
+    system: ${{ parameters.system}}
+    application: ${{ parameters.application }}

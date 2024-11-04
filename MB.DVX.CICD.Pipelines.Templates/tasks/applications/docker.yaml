@@ -1,0 +1,23 @@
+steps:
+- task: Docker@2
+  displayName: 'Login no Docker Registry'
+  inputs:
+    command: login
+    containerRegistry: DockerRegistryMB
+- task: Docker@2
+  displayName: 'Docker build'
+  inputs:
+    containerRegistry: DockerRegistryMB
+    repository: '${{ parameters.application }}'
+    command: build
+    tags: ${{ parameters.tag }}
+    Dockerfile: '$(dockerfilePath)'
+    arguments: '--build-arg http_proxy=$(PROXY_HTTP) --build-arg https_proxy=$(PROXY_HTTPS) --progress=plain'
+- task: Docker@2
+  displayName: 'Docker push'
+  inputs:
+    containerRegistry: DockerRegistryMB
+    repository: '${{ parameters.application }}'
+    command: push
+    tags: |
+      ${{ parameters.tag }}

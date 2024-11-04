@@ -1,0 +1,11 @@
+replicaCount: 1
+
+image:
+  repository: "imagensmbprd.azurecr.io/agent"
+  tag: "latest"
+
+azure:
+  devops:
+    url: https://devops.mercantil.com.br/Tecnologia_MB
+    pool: gke-agent
+    secretName: azure-devops-token

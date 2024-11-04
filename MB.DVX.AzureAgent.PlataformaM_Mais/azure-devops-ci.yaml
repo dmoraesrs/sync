@@ -1,0 +1,46 @@
+trigger:
+  - main
+
+pool:
+  name: 'Agente-Kubernetes'
+
+variables:
+  PROXY_HTTP: http://proxy.mercantil.com.br:3128
+  PROXY_HTTPS: http://proxy.mercantil.com.br:3128
+
+stages:
+  - stage: CI
+    displayName: Continuous Integration
+    jobs:
+      - job: build
+        displayName: Build Docker Image
+        steps:
+          - task: Docker@2
+            displayName: Build an image
+            inputs:
+              containerRegistry: 'Azure.io'  # Nome correto da conexão com ACR
+              repository: 'agent'
+              command: 'build'
+              Dockerfile: '**/Dockerfile'
+              arguments: '--build-arg http_proxy=$(PROXY_HTTP) --build-arg https_proxy=$(PROXY_HTTPS) --progress=plain'
+          
+          - task: Docker@2
+            displayName: Push image to ACR
+            inputs:
+              containerRegistry: 'Azure.io'
+              repository: 'agent'
+              command: 'push'
+              tags: "$(Build.BuildId)"  # Sem argumentos adicionais para `push`
+
+          - task: ArchiveFiles@2
+            displayName: Archive agent files
+            inputs:
+              rootFolderOrFile: '$(Build.SourcesDirectory)'
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/agent.zip'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish agent artifact'
+            inputs:
+              artifactName: agent
+              pathToPublish: '$(Build.ArtifactStagingDirectory)/agent.zip'

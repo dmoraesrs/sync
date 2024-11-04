@@ -1,0 +1,23 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ .Values.name }}-virtualservice
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/component: {{ .Values.name }}
+    argocd.argoproj.io/instance: {{ .Values.name }}
+    backstage.io/kubernetes-id: {{ .Values.name }}
+spec:
+  hosts:
+    - "{{ .Values.ingress.host }}"
+  gateways:
+    - {{ .Values.ingress.gateway }}
+  http:
+    - match:
+        - uri:
+            prefix: "/"
+      route:
+        - destination:
+            host: {{ .Values.name }}-service
+            port:
+              number: {{ .Values.port }}

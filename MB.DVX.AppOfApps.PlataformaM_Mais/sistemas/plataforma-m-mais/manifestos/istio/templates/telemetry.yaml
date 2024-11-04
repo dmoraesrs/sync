@@ -1,0 +1,24 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: mesh-default
+  namespace: istio-system
+spec:
+  # no selector specified, applies to all workloads
+  tracing:
+  - randomSamplingPercentage: 10.00
+---
+apiVersion: telemetry.istio.io/v1alpha1
+kind: Telemetry
+metadata:
+  name: ingressgateway-telemetry
+  namespace: istio-system
+spec:
+  metrics:
+  - providers:
+    - name: prometheus
+  - providers:
+    - name: stackdriver
+  accessLogging:
+  - providers:
+    - name: envoy

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: plataforma-m-mais
+  namespace: plataforma-m-mais
+  labels:
+    type: systema
+spec:
+  project: default
+  source:
+    repoURL: https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
+    path: sistemas/plataforma-m-mais/apps
+    targetRevision: HEAD
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: plataforma-m-mais
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

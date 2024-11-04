@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/component: frontend
+    argocd.argoproj.io/instance: frontend
+    backstage.io/kubernetes-id: frontend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+        app.kubernetes.io/name: frontend
+        app.kubernetes.io/version: "latest"
+        app.kubernetes.io/instance: frontend
+        app.kubernetes.io/component: frontend
+        argocd.argoproj.io/instance: frontend
+        backstage.io/kubernetes-id: frontend
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: layer
+                operator: In
+                values:
+                - apps
+      containers:
+        - name: frontend
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            requests:
+              memory: "{{ .Values.resources.requests.memory }}"
+              cpu: "{{ .Values.resources.requests.cpu }}"
+            limits:
+              memory: "{{ .Values.resources.limits.memory }}"
+              cpu: "{{ .Values.resources.limits.cpu }}"
+          ports:
+            - name: http
+              containerPort: 7007
+          envFrom:
+            - secretRef:
+                name: frontend-secrets
+          readinessProbe:
+            httpGet:
+              path: /healthcheck
+              port: 7007
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecrets.name }}

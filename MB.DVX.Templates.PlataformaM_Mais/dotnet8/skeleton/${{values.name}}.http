@@ -1,0 +1,11 @@
+@${{ values.name }}_HostAddress = http://localhost:5198
+
+GET {{${{ values.name }}_HostAddress}}/
+Accept: application/json
+
+###
+
+GET {{${{ values.name }}_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

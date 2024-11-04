@@ -1,0 +1,20 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: api-teste-2
+  description: Teste
+  links:
+    - url: https://api-teste-2.plataformammais-sandbox.n-mercantil.com.br
+      title: Open application
+      icon: externalLink
+  annotations:
+    argocd/project: default
+    argocd/app-name: api-teste-2
+    backstage.io/kubernetes-namespace: plataforma-m-mais
+    backstage.io/kubernetes-id: api-teste-2
+    dev.azure.com/project-repo: MB/MB.DVX.Templates.PlataformaM_Mais.api-teste-2
+spec:
+  type: service
+  lifecycle: experimental
+  owner: azure_plataformammais_sandbox
+  system: plataforma-m-mais

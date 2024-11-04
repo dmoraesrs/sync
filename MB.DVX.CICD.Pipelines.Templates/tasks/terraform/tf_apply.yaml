@@ -1,0 +1,50 @@
+steps:
+- task: DownloadBuildArtifacts@0
+  inputs:
+    buildType: 'current' 
+    downloadType: 'single'
+    artifactName: drop
+    downloadPath: '$(Build.Repository.Name)'
+
+- script: echo ${{ parameters.terraform_env }}
+  displayName: 'Show terraform environment variable'
+
+- task: DownloadSecureFile@1
+  name: AzureDevopsCredential
+  displayName: 'Download Secure File to Azure DevOps'
+  inputs:
+    secureFile: "devex-git-credentials"
+
+- ${{ if eq(parameters['terraform_env'], 'dev') }}:
+  - task: DownloadSecureFile@1
+    name: GoogleCredentials
+    displayName: 'Download Secure File'
+    inputs:
+      secureFile: $(SECURE_FILE_NAME_DEV)
+    
+- ${{ if eq(parameters['terraform_env'], 'hml') }}:
+  - task: DownloadSecureFile@1
+    name: GoogleCredentials
+    displayName: 'Download Secure File'
+    inputs:
+      secureFile: $(SECURE_FILE_NAME_HML)
+
+- ${{ if eq(parameters['terraform_env'], 'prd') }}:
+  - task: DownloadSecureFile@1
+    name: GoogleCredentials
+    displayName: 'Download Secure File'
+    inputs:
+      secureFile: $(SECURE_FILE_NAME_PRD)
+
+- task: Bash@3
+  name: 'Running_Terraform_apply'
+  displayName: 'Running terraform apply ${{ parameters.terraform_choice }} ${{ parameters.terraform_env }}'
+  inputs:
+    filePath: MB.DVX.CICD.Pipelines.Templates/scripts/tf_apply.sh
+    arguments: ${{ parameters.terraform_choice }}
+  env:
+    GOOGLE_APPLICATION_CREDENTIALS: $(GoogleCredentials.secureFilePath)
+    AZURE_CREDENTIAL: $(AzureDevopsCredential.secureFilePath)
+    GITUSERNAME: $(DEVOPS-Usuario)
+    GITPASSWORD: $(DEVOPS-Senha)    
+    

@@ -1,0 +1,5 @@
+steps:
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '$(Pipeline.Workspace)/**/*.zip' # string. Required. Archive file patterns. Default: **/*.zip.
+    destinationFolder: '$(Pipeline.Workspace)/drop'

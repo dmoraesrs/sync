@@ -1,0 +1,8 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: full-read-access
+rules:
+  - apiGroups: ['*'] # "" means core API group, * means all API groups
+    resources: ['*'] # "*" means all resources
+    verbs: ['get', 'list'] # "*" means all operations (get, list, create, update, delete, etc.)

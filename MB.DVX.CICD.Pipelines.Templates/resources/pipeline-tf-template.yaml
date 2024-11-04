@@ -1,0 +1,23 @@
+parameters:
+- name: terraform_choice
+  type: string
+  default: apply
+- name: terraform_env
+  type: string
+  
+trigger:
+- main
+
+variables:
+- template: ../variables/variables-azurePipelines.yaml
+- group: Deploy DevOps
+
+stages:
+- template: ../stages/terraform/stage-plan.yaml@pipelines
+  parameters: 
+    terraform_choice: ${{ parameters.terraform_choice}}
+    terraform_env: ${{ parameters.terraform_env }}
+- template: ../stages/terraform/stage-apply.yaml@pipelines
+  parameters: 
+    terraform_choice: ${{ parameters.terraform_choice}}
+    terraform_env: ${{ parameters.terraform_env }}

@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: azure-devops-agent
+  namespace: plataforma-m-mais
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: layer
+            operator: In
+            values:
+            - apps
+  containers:
+  - name: azure-devops-agent
+    image: http://imagensmbprd.azurecr.io/agent:189068
+    command: ["--unattended"]
+    args: [
+      "--url", "https://devops.mercantil.com.br/Tecnologia_MB/",
+      "--token", "g27ax6dn5hxql4o3re55yxs74ehrptlrauqh56bi4u7azuvozwpq",
+      "--pool", "agent-dvx-gke"
+    ]
+  #   volumeMounts:
+  #   - name: azure-devops-agent-work
+  #     mountPath: /home/vstsagent/_work
+  #   - name: azure-devops-agent-temp
+  #     mountPath: /home/vstsagent/_temp
+  #   - name: azure-devops-agent-logs
+  #     mountPath: /home/vstsagent/_logs
+  # volumes:
+  # - name: azure-devops-agent-work
+  #   emptyDir: {}
+  # - name: azure-devops-agent-temp
+  #   emptyDir: {}
+  # - name: azure-devops-agent-logs
+  #   emptyDir: {}

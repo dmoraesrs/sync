@@ -1,0 +1,10 @@
+# namespace
+apiVersion: backstage.io/v1alpha1
+kind: Domain
+metadata:
+  name: observabilidade
+  description: Everything about observabilidade
+spec:
+  owner: azure_plataformammais_sandbox
+  lifecycle: experimental
+  location: observabilidade-sandbox
