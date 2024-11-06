@@ -1,10 +1,10 @@
-name: api-devex-teste-8
+name: api-devex-teste-9
 namespace: plataforma-m-mais
 replicaCount: 2
 
 image:
-  repository: imagensmbprd.azurecr.io/mb.dvx.templates.plataformam_mais.api-devex-teste-8
-  tag: 192852
+  repository: imagensmbprd.azurecr.io/mb.dvx.templates.plataformam_mais.api-devex-teste-9
+  tag: 192854
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
@@ -21,5 +21,5 @@ resources:
     cpu: "200m"
 
 ingress:
-  host: api-devex-teste-8.plataformammais-sandbox.n-mercantil.com.br
+  host: api-devex-teste-9.plataformammais-sandbox.n-mercantil.com.br
   gateway: istio-system/istio-ingressgateway
