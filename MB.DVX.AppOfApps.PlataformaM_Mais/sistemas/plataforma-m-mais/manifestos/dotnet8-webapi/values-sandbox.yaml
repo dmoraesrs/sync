@@ -3,8 +3,8 @@ namespace: plataforma-m-mais
 replicaCount: 2
 
 image:
-  repository: imagensmbprd.azurecr.io/mb.dvx.plataformam_mais.template-dotnet8
-  tag: 192893
+  repository: imagensmbprd.azurecr.io/mb.dvx.plataformam_mais.dotnet8-webapi
+  tag: 192934
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
