@@ -1,0 +1,21 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dotnet8-webapi
+  description: webapi description
+  links:
+    - url: https://dotnet8-webapi.plataformammais-sandbox.n-mercantil.com.br
+      title: Open application
+      icon: externalLink
+  annotations:
+    argocd/project: default
+    argocd/app-name: dotnet8-webapi
+    backstage.io/kubernetes-namespace: plataforma-m-mais
+    backstage.io/kubernetes-id: dotnet8-webapi
+    dev.azure.com/host-org: devops.mercantil.com.br/Tecnologia_MB
+    dev.azure.com/project-repo: MB/MB.DVX.PlataformaM_Mais.dotnet8-webapi
+spec:
+  type: service
+  lifecycle: experimental
+  owner: azure_plataformammais_sandbox
+  system: plataforma-m-mais

@@ -44,7 +44,7 @@ spec:
                   scheme: http
                   static_configs:
                     - targets: ['argocd-server-metrics.plataforma-m-mais.svc.cluster.local:8083']
-                - job_name: 'istio-mesh'
+                - job_name: 'job-istio-mesh'
                   kubernetes_sd_configs:
                     - role: pod
                   relabel_configs:

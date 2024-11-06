@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dotnet8-webapi
+  namespace: plataforma-m-mais
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
+    path: sistemas/plataforma-m-mais/manifestos/dotnet8-webapi
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - values-sandbox.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: plataforma-m-mais
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
