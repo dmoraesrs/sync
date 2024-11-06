@@ -1,0 +1,25 @@
+name: api-devex-teste-10
+namespace: plataforma-m-mais
+replicaCount: 2
+
+image:
+  repository: imagensmbprd.azurecr.io/mb.dvx.templates.plataformam_mais.api-devex-teste-10
+  tag: 192871
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  name: docker-credentials
+
+port: 8080
+
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"
+
+ingress:
+  host: api-devex-teste-10.plataformammais-sandbox.n-mercantil.com.br
+  gateway: istio-system/istio-ingressgateway
