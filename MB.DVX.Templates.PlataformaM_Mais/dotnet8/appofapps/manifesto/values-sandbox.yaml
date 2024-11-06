@@ -3,8 +3,8 @@ namespace: ${{ values.system }}
 replicaCount: 2
 
 image:
-  repository: imagensmbprd.azurecr.io/${{ values.image }}
-  tag: latest
+  repository: imagensmbprd.azurecr.io/mb.dvx.plataformam_mais.template-dotnet8
+  tag: 192893
   pullPolicy: IfNotPresent
 
 imagePullSecrets:

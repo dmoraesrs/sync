@@ -44,6 +44,13 @@ spec:
                   scheme: http
                   static_configs:
                     - targets: ['argocd-server-metrics.plataforma-m-mais.svc.cluster.local:8083']
+                - job_name: 'istio-mesh'
+                  kubernetes_sd_configs:
+                    - role: pod
+                  relabel_configs:
+                    - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_namespace, __meta_kubernetes_pod_label_istio]
+                      action: keep
+                      regex: istio-ingressgateway;istio-system
           resources:
             requests:
               memory: "256Mi"
@@ -134,7 +141,7 @@ metadata:
   name: prometheus-extra-scrape
   namespace: observabilidade
 data:
-  scrape-configs.yaml: |
+  scrape-configs.yaml: |    
     - job_name: 'istio-control-plane'
       metrics_path: /metrics
       scheme: http
@@ -173,3 +180,19 @@ spec:
             host: prometheus-kube-prometheus-prometheus
             port:
               number: 9090
+---
+
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: istio-mesh
+  namespace: observabilidade
+spec:
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      istio: enabled
+  endpoints:
+    - port: http-monitoring
+      interval: 15s
