@@ -5,7 +5,16 @@ parameters:
 - name: application
   type: string
   default: null
-  
+- name: pool_name
+  type: string
+  default: null
+- name: environment_approve
+  type: string
+  default: null
+- name: docker_file_path
+  type: string
+  default: null
+
 trigger:
 - main
 
@@ -19,7 +28,12 @@ stages:
   parameters: 
     system: ${{ parameters.system}}
     application: ${{ parameters.application }}
+    pool_name: ${{ parameters.pool_name }}
+    environment_approve: ${{ parameters.environment_approve }}
+    docker_file_path: ${{ parameters.docker_file_path }}
 - template: ../stages/applications/stage-deploy.yaml@pipelines
   parameters: 
     system: ${{ parameters.system}}
     application: ${{ parameters.application }}
+    pool_name: ${{ parameters.pool_name }}
+    environment_approve: ${{ parameters.environment_approve }}

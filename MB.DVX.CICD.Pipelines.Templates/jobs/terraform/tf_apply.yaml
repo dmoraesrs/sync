@@ -1,7 +1,7 @@
 jobs:
 - deployment: terraform_apply_deployment
   displayName: 'Terraform_Apply'
-  environment: $(ENVIRONMENT_APPROVE)
+  environment: ${{ parameters.environment_approve }}
   pool: $(pool_name)
   condition: succeeded()
   strategy:

@@ -11,13 +11,15 @@ steps:
       git -C ./MB.DVX.AppOfApps.PlataformaM_Mais config user.name "Plataforma M Mais"
       git -C ./MB.DVX.AppOfApps.PlataformaM_Mais config credential.helper '!f() { sleep 1; echo "username=${GITUSERNAME:-pat}"; echo "password=$GITPASSWORD"; }; f'
       git -C ./MB.DVX.AppOfApps.PlataformaM_Mais remote set-url origin https://$GITUSERNAME@devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
+      echo "Show tag:"
+      echo "$(Build.BuildId)"
       echo "Executando Sed"
-      sed -i 's|tag: .*|tag: ${{ parameters.tag}}|' ./MB.DVX.AppOfApps.PlataformaM_Mais/sistemas/${{ parameters.system}}/manifestos/${{ parameters.application}}/values-sandbox.yaml
+      sed -i 's|tag: .*|tag: $(Build.BuildId)|' ./MB.DVX.AppOfApps.PlataformaM_Mais/sistemas/${{ parameters.system}}/manifestos/${{ parameters.application}}/values-sandbox.yaml
       echo "Add file"
       git -C ./MB.DVX.AppOfApps.PlataformaM_Mais add .
       echo "Executando commit"
       export GIT_TERMINAL_PROMPT=1
-      git -C ./MB.DVX.AppOfApps.PlataformaM_Mais commit -m "${{ parameters.application}}: update image to version $(tag)"
+      git -C ./MB.DVX.AppOfApps.PlataformaM_Mais commit -m "${{ parameters.application}}: update image to version $(Build.BuildId)"
       git -C ./MB.DVX.AppOfApps.PlataformaM_Mais status
       git -C ./MB.DVX.AppOfApps.PlataformaM_Mais push
   displayName: 'Commit and push updated manifest to GitOps repo'

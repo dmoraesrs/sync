@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ${{ values.name }}
+  name: api-devex-teste-8
   namespace: plataforma-m-mais
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,14 +9,14 @@ spec:
   project: default
   source:
     repoURL: https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
-    path: sistemas/${{ values.system }}/manifestos/${{ values.name }}
+    path: sistemas/plataforma-m-mais/manifestos/api-devex-teste-8
     targetRevision: HEAD
     helm:
       valueFiles:
         - values-sandbox.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: ${{ values.system }}
+    namespace: plataforma-m-mais
   syncPolicy:
     automated:
       prune: true

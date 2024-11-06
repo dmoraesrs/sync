@@ -160,7 +160,7 @@ Esse valor de variável será passada pelo pipeline para o Template de Terraform
 jobs:
 - deployment: terraform_apply_deployment
   displayName: 'Terraform_Apply'
-  environment: $(ENVIRONMENT_APPROVE) 
+  environment: ${{ environment_approve }} 
 ```
 
 # 5 Detalhamento das variáveis de ambiente

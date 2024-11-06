@@ -1,8 +1,8 @@
 jobs:
 - deployment: deploy
   displayName: 'Deploy'
-  environment: $(ENVIRONMENT_APPROVE)
-  pool: $(pool_name)
+  environment: ${{ parameters.environment_approve }}
+  pool: ${{ parameters.pool_name }}
   condition: succeeded()
   strategy:
     runOnce:

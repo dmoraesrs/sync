@@ -17,6 +17,19 @@ parameters:
   type: string
   values:
   - frontend
+- name: choice_pool
+  displayName: Choose the pool
+  default: agent-dvx-gke
+  type: string
+  values:
+  - agent-dvx-gke
+- name: choice_environment_approve
+  displayName: Choose the environment
+  default: terraform-iac-test
+  type: string
+  values:
+  - terraform-iac-test
+
 
 resources:
   repositories:
@@ -33,3 +46,6 @@ extends:
   parameters: 
     system: ${{ parameters.choice_system }}
     application: ${{ parameters.choice_application }}
+    pool_name: ${{ parameters.choice_pool }}
+    environment_approve: ${{ parameters.choice_environment_approve }}
+    docker_file_path: '$(Build.SourcesDirectory)/$(Build.Repository.Name)/Dockerfile'

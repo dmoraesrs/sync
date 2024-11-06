@@ -21355,6 +21355,7 @@ data:
         clientID: $azure.clientId
         clientSecret: $azure.clientSecret
         requestedScopes: ["openid", "profile", "email"]
+  timeout.reconciliation: 60s
 ---
 apiVersion: v1
 kind: ConfigMap

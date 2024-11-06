@@ -15,6 +15,7 @@ metadata:
     argocd/app-name: frontend
     backstage.io/kubernetes-namespace: plataforma-m-mais
     backstage.io/kubernetes-id: frontend
+    dev.azure.com/host-org: devops.mercantil.com.br/Tecnologia_MB
     dev.azure.com/project-repo: MB/MB.DVX.Frontend.PlataformaM_Mais
 spec:
   type: service

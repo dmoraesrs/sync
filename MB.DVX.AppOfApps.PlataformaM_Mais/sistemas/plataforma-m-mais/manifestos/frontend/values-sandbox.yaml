@@ -3,7 +3,7 @@ replicaCount: 2
 
 image:
   repository: imagensmbprd.azurecr.io/mb.dvx.frontend.plataformam_mais
-  tag: 
+  tag: 192724
   pullPolicy: IfNotPresent
 
 imagePullSecrets:

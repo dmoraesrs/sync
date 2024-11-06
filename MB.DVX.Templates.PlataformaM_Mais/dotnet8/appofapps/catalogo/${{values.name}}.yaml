@@ -12,6 +12,7 @@ metadata:
     argocd/app-name: ${{ values.name }}
     backstage.io/kubernetes-namespace: ${{ values.system }}
     backstage.io/kubernetes-id: ${{ values.name }}
+    dev.azure.com/host-org: devops.mercantil.com.br/Tecnologia_MB
     dev.azure.com/project-repo: MB/MB.DVX.Templates.PlataformaM_Mais.${{ values.name }}
 spec:
   type: service

@@ -1,17 +1,16 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: dotnet8-template
-  title: Dotnet 8 Template
-  description: Scaffold a new .NET 8 project
+  name: cloudsql-template
+  title: CloudSQL Template
+  description: Scaffold a new  project
   tags:
-    - dotnet
-    - csharp
-    - webapi
-    - recommended
+    - postgresql
+    - mysql
+    - sqlserver
 spec:
   owner: azure_plataformammais_sandbox
-  type: service
+  type: resource
   # these are the steps which are rendered in the frontend with the form input
   # https://backstage.io/docs/features/software-templates/input-examples
   parameters:
@@ -21,14 +20,15 @@ spec:
         - name
         - description
         - system
+        - component
       properties:
         name:
           type: string
-          title: Project Name
+          title: Database Name
           description: The name of the project
           ui:autofocus: true
           maxLength: 50
-          pattern: '^([-.a-z0-9]+)*$'        
+          pattern: '^([-a-z0-9]+)*$'        
           #ui:field: ValidateKebabCase # Custom field extension
         description:
           title: Description
@@ -45,9 +45,18 @@ spec:
           description: The system the component belongs to
           ui:field: EntityPicker
           ui:options:
-            allowArbitraryValues: false
             catalogFilter:
               kind: System
+        component:
+          title: Component
+          type: string
+          description: The resource the component belongs to
+          ui:field: EntityPicker
+          ui:options:
+            allowArbitraryValues: false
+            catalogFilter:
+              kind: Component
+              spec.type: service
     #- title: Choose a destination
     #  required:
     #    - repoUrl

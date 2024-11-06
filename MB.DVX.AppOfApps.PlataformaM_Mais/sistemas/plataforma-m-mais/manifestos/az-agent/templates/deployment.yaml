@@ -76,7 +76,7 @@ spec:
                   - key: layer
                     operator: In
                     values:
-                      - apps
+                      - build-agents
       restartPolicy: Always
       imagePullSecrets:
         - name: docker-credentials

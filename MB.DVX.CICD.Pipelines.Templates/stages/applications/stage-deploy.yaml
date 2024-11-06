@@ -8,3 +8,5 @@ stages:
     parameters: 
       system: ${{ parameters.system }}
       application: ${{ parameters.application }}
+      pool_name: ${{ parameters.pool_name }}
+      environment_approve: ${{ parameters.environment_approve }}

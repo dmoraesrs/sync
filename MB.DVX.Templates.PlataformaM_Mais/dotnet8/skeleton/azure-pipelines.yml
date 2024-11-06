@@ -18,3 +18,6 @@ extends:
   parameters: 
     system: ${{ values.system }}
     application: ${{ values.name }}
+    pool_name: agent-dvx-gke
+    environment_approve: terraform-iac-test
+    docker_file_path: '$(Build.SourcesDirectory)/$(Build.Repository.Name)/Dockerfile'
