@@ -102,7 +102,7 @@ spec:
         allowedHosts: ["devops.mercantil.com.br"]
         description: This is ${{ parameters.name }}
         #repoUrl: ${{ parameters.repoUrl }}
-        repoUrl: devops.mercantil.com.br?repo=MB.DVX.Templates.PlataformaM_Mais.${{ parameters.name }}&organization=Tecnologia_MB&project=MB
+        repoUrl: devops.mercantil.com.br?repo=MB.DVX.PlataformaM_Mais.${{ parameters.name }}&organization=Tecnologia_MB&project=MB
         # repoVisibility: private
         defaultBranch: main
         gitCommitMessage: Create scaffold
@@ -113,7 +113,7 @@ spec:
       name: Add Pipeline
       action: pipeline:azure
       input:
-        repositoryName: MB.DVX.Templates.PlataformaM_Mais.${{ parameters.name }}
+        repositoryName: MB.DVX.PlataformaM_Mais.${{ parameters.name }}
         repositoryId: ${{ steps['publish'].output.repositoryId }}
 
     - id: clone-azure-repo
@@ -168,7 +168,7 @@ spec:
         targetPath: ./appofapps/sistemas/${{ parameters.system | parseEntityRef | pick('name') }}/manifestos/${{ parameters.name }}
         #replace: true
         values:
-          image: mb.dvx.templates.plataformam_mais.${{ parameters.name }}
+          image: mb.dvx.plataformam_mais.${{ parameters.name }}
           name: ${{ parameters.name }}
           owner: azure_plataformammais_sandbox
           description: ${{ parameters.description }}
