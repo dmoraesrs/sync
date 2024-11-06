@@ -14,6 +14,7 @@ steps:
       echo "Show tag:"
       echo "$(Build.BuildId)"
       echo "Executando Sed"
+      sed -i 's|image: .*|image: imagensmbprd.azurecr.io/mb.dvx.plataformam_mais.${{ parameters.application}}|' ./MB.DVX.AppOfApps.PlataformaM_Mais/sistemas/${{ parameters.system}}/manifestos/${{ parameters.application}}/values-sandbox.yaml
       sed -i 's|tag: .*|tag: $(Build.BuildId)|' ./MB.DVX.AppOfApps.PlataformaM_Mais/sistemas/${{ parameters.system}}/manifestos/${{ parameters.application}}/values-sandbox.yaml
       echo "Add file"
       git -C ./MB.DVX.AppOfApps.PlataformaM_Mais add .
