@@ -1,6 +1,5 @@
 using Prometheus;
 using Scalar.AspNetCore;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,37 +8,35 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers();
+// Prometheus
+builder.Services.UseHttpClientMetrics();
 
 var app = builder.Build();
 
-// Enable the Prometheus metrics endpoint
-app.UseRouting();
-app.UseHttpMetrics(); // Enable HTTP metrics for request duration, etc.
-app.MapMetrics(); // This will expose the /metrics endpoint
-
-// Map other controllers
-app.MapControllers();
+// Prometheus
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger(options =>
     {
         options.RouteTemplate = "/openapi/{documentName}.json";
     });
     app.MapScalarApiReference();
-    app.UseSwaggerUI();
-}
+// }
 
 app.UseHttpsRedirection();
+
+app.MapGet("/", () => "Hello World!");
 
 var summaries = new[]
 {
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/", () =>
+app.MapGet("/weatherforecast", () =>
 {
     var forecast =  Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
