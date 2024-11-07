@@ -54,6 +54,7 @@ import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 
 import {
+  EntityAzurePullRequestsContent,
   EntityAzurePipelinesContent,
   isAzureDevOpsAvailable,
 } from '@backstage-community/plugin-azure-devops';
@@ -84,7 +85,7 @@ const cicdContent = (
      */}
 
     <EntitySwitch.Case if={isAzureDevOpsAvailable}>
-      <EntityAzurePipelinesContent defaultLimit={25} />
+      <EntityAzurePipelinesContent defaultLimit={10} />
     </EntitySwitch.Case>
 
     {/*
@@ -171,6 +172,10 @@ const serviceEntityPage = (
       if={isKubernetesAvailable}
     >
       <EntityKubernetesContent />
+    </EntityLayout.Route>
+
+    <EntityLayout.Route if={isAzureDevOpsAvailable} path="/pull-requests" title="Pull Requests">
+      <EntityAzurePullRequestsContent defaultLimit={10} />
     </EntityLayout.Route>
 
     <EntityLayout.Route path="/api" title="API">
