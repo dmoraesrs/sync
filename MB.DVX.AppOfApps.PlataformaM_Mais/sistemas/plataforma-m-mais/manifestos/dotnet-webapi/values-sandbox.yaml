@@ -1,5 +1,5 @@
-name: ${{ values.name }}
-namespace: ${{ values.system }}
+name: dotnet-webapi
+namespace: plataforma-m-mais
 replicaCount: 2
 
 image:
@@ -21,5 +21,5 @@ resources:
     cpu: "200m"
 
 ingress:
-  host: ${{ values.name }}.plataformammais-sandbox.n-mercantil.com.br
+  host: dotnet-webapi.plataformammais-sandbox.n-mercantil.com.br
   gateway: istio-system/istio-ingressgateway
