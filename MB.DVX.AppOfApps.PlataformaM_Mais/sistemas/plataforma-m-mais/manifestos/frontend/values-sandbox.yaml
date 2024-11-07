@@ -2,8 +2,8 @@ namespace: plataforma-m-mais
 replicaCount: 2
 
 image:
-  repository: imagensmbprd.azurecr.io/mb.dvx.plataformam_mais.frontend
-  tag: 193161
+  repository: imagensmbprd.azurecr.io/mb.dvx.frontend.plataformam_mais
+  tag: 193209
   pullPolicy: IfNotPresent
 
 imagePullSecrets:

@@ -1,0 +1,21 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: api-do-vinicius
+  description: Teste
+  links:
+    - url: https://api-do-vinicius.plataformammais-sandbox.n-mercantil.com.br
+      title: Open application
+      icon: externalLink
+  annotations:
+    argocd/project: default
+    argocd/app-name: api-do-vinicius
+    backstage.io/kubernetes-namespace: plataforma-m-mais
+    backstage.io/kubernetes-id: api-do-vinicius
+    dev.azure.com/host-org: devops.mercantil.com.br/Tecnologia_MB
+    dev.azure.com/project-repo: MB/MB.DVX.PlataformaM_Mais.api-do-vinicius
+spec:
+  type: service
+  lifecycle: experimental
+  owner: azure_plataformammais_sandbox
+  system: plataforma-m-mais
