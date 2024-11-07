@@ -1,0 +1,21 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: api-teste-prometheus-1
+  description: Teste
+  links:
+    - url: https://api-teste-prometheus-1.plataformammais-sandbox.n-mercantil.com.br
+      title: Open application
+      icon: externalLink
+  annotations:
+    argocd/project: default
+    argocd/app-name: api-teste-prometheus-1
+    backstage.io/kubernetes-namespace: plataforma-m-mais
+    backstage.io/kubernetes-id: api-teste-prometheus-1
+    dev.azure.com/host-org: devops.mercantil.com.br/Tecnologia_MB
+    dev.azure.com/project-repo: MB/MB.DVX.PlataformaM_Mais.api-teste-prometheus-1
+spec:
+  type: service
+  lifecycle: experimental
+  owner: azure_plataformammais_sandbox
+  system: plataforma-m-mais

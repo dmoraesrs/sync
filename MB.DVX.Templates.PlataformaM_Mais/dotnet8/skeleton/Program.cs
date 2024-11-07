@@ -1,3 +1,5 @@
+using Prometheus;
+using Scalar.AspNetCore;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,12 +9,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddControllers();
+
 var app = builder.Build();
+
+// Enable the Prometheus metrics endpoint
+app.UseRouting();
+app.UseHttpMetrics(); // Enable HTTP metrics for request duration, etc.
+app.MapMetrics(); // This will expose the /metrics endpoint
+
+// Map other controllers
+app.MapControllers();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger(options =>
+    {
+        options.RouteTemplate = "/openapi/{documentName}.json";
+    });
+    app.MapScalarApiReference();
     app.UseSwaggerUI();
 }
 
