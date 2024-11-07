@@ -196,3 +196,38 @@ spec:
   endpoints:
     - port: http-monitoring
       interval: 15s
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-read-namespaces
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints", "pods", "services"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["monitoring.coreos.com"]
+    resources: ["servicemonitors"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: monitor-all-services
+  namespace: observabilidade  # Namespace onde o Prometheus está rodando
+spec:
+  selector:
+    matchExpressions:
+      - {key: kubernetes.io/metadata.name, operator: In, values: ["plataforma-m-mais"]}
+  namespaceSelector:
+    matchNames:
+      - plataforma-m-mais
+  endpoints:
+    - port: "8080"  # Nome da porta para expor o endpoint de métricas
+      path: /metrics
+      interval: 30s
+
+
+
+
