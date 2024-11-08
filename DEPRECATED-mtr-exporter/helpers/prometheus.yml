@@ -1,0 +1,10 @@
+    - job_name: 'mtr-exporter'
+      scrape_interval: 15s
+      kubernetes_sd_configs:
+      - role: pod
+        namespaces:
+          names:
+          - kafka
+        selectors:
+        - role: "pod"
+          label: "app=mtr-exporter"
