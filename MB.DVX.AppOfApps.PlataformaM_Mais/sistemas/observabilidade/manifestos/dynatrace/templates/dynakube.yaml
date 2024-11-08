@@ -1,0 +1,45 @@
+apiVersion: dynatrace.com/v1beta2
+kind: DynaKube
+metadata:
+  name: {{ .Values.namespace }}
+  namespace: {{ .Values.namespace }}
+spec:
+  apiUrl: {{ .Values.apiUrl }}
+  networkZone: {{ .Values.networkZone }}
+  metadataEnrichment:
+    enabled: true
+  oneAgent:
+    hostGroup: {{ .Values.hostGroup }}
+    cloudNativeFullStack:
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        - key: "layer"
+          operator: "Equal"
+          value: "apps"
+          effect: "NoExecute"
+        - key: "layer"
+          operator: "Equal"
+          value: "build-agents"
+          effect: "NoExecute"
+        - key: "layer"
+          operator: "Equal"
+          value: "gateway"
+          effect: "NoExecute"
+  activeGate:
+    capabilities:
+      - routing
+      - kubernetes-monitoring
+      - dynatrace-api
+    group: {{ .Values.activeGateGroup }}
+    resources:
+      requests:
+        cpu: {{ .Values.resources.requests.cpu }}
+        memory: {{ .Values.resources.requests.memory }}
+      limits:
+        cpu: {{ .Values.resources.limits.cpu }}
+        memory: {{ .Values.resources.limits.memory }}

@@ -1,20 +1,25 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: dynatrace
+  name: crossplane
   namespace: plataforma-m-mais
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   sources:
+    - repoURL: https://charts.crossplane.io/stable
+      chart: crossplane
+      targetRevision: 1.18.0
     - repoURL: https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
-      path: sistemas/observabilidade/manifestos/dynatrace
+      path: sistemas/plataforma-m-mais/manifestos/crossplane
       targetRevision: HEAD
       helm:
         valueFiles:
           - values-sandbox.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: observabilidade
+    namespace: plataforma-m-mais
   syncPolicy:
     automated:
       prune: true

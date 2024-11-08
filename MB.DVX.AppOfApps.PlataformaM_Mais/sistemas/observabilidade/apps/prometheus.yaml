@@ -53,10 +53,10 @@ spec:
                       regex: istio-ingressgateway;istio-system
           resources:
             requests:
-              memory: "256Mi"
+              memory: "700Mi"
               cpu: "100m"
             limits:
-              memory: "1Gi"
+              memory: "1.4Gi"
               cpu: "200m"
           nodeSelector:
             layer: apps

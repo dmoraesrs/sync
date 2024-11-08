@@ -40,6 +40,13 @@ spec:
       containers:
         - name: kubepodcreation
           image: imagensmbprd.azurecr.io/agent:189502
+          resources:
+            requests:
+              cpu: 100m
+              memory: 350Mi
+            limits:
+              cpu: 250m
+              memory: 1Gi
           env:
             - name: AZP_URL
               valueFrom:
