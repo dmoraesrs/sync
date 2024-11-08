@@ -13,3 +13,11 @@ metadata:
   name: observabilidade
   labels:
     istio-injection: enabled
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dynatrace
+  labels:
+    istio-injection: enabled

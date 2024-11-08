@@ -19,7 +19,7 @@ spec:
           - values-sandbox.yaml
   destination:
     server: https://kubernetes.default.svc
-    namespace: observabilidade
+    namespace: dynatrace
   syncPolicy:
     automated:
       prune: true
