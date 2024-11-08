@@ -30,6 +30,13 @@ spec:
           operator: "Equal"
           value: "gateway"
           effect: "NoExecute"
+      oneAgentResources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: 500m
+          memory: 512Mi
   activeGate:
     capabilities:
       - routing

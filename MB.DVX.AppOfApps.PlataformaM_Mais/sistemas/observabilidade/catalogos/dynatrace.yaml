@@ -19,4 +19,4 @@ spec:
   type: service
   lifecycle: experimental
   owner: azure_plataformammais_sandbox
-  system: plataforma-m-mais
+  system: observabilidade
