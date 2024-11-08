@@ -40,6 +40,11 @@ import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/
 
 import { microsoftAuthApiRef } from '@backstage/core-plugin-api';
 
+import { mMaisThemeLight } from './theme/mMaisThemeLight';
+import { mMaisThemeDark } from './theme/mMaisThemeDark';
+import LightIcon from '@material-ui/icons/WbSunny';
+import { UnifiedThemeProvider} from '@backstage/theme';
+
 const MicrosoftProvider: SignInProviderConfig = {
   id: 'microsoft-auth-provider',
   title: 'Microsoft',
@@ -76,13 +81,31 @@ const app = createApp({
       <SignInPage
         {...props}
         auto 
-        // providers={['guest', MicrosoftProvider]}
+        //providers={['guest', MicrosoftProvider]}
         provider={
           MicrosoftProvider
         }
       />
     ),
   },
+  themes: [{
+    id: 'm-mais-theme-dark',
+    title: 'M+ Dark',
+    variant: 'dark',
+    icon: <LightIcon />,
+    Provider: ({ children }) => (
+      <UnifiedThemeProvider theme={mMaisThemeDark} children={children} />
+    ),
+  },
+  {
+    id: 'm-mais-theme-light',
+    title: 'M+ Light',
+    variant: 'light',
+    icon: <LightIcon />,
+    Provider: ({ children }) => (
+      <UnifiedThemeProvider theme={mMaisThemeLight} children={children} />
+    ),
+  }]
 });
 
 const routes = (

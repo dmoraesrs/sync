@@ -36,6 +36,8 @@ backend:
 
 auth:
   providers:
+    #guest:
+    #  dangerouslyAllowOutsideDevelopment: true
     microsoft:
       development:
         clientId: ${MICROSOFT_ENTRAID_CLIENT_ID}

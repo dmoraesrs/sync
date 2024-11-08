@@ -172,8 +172,8 @@ spec:
       action: azure:repo:push
       input:
         sourcePath: ./appofapps
-        branch: ${{ parameters.name }}
-        gitCommitMessage: Add ${{ parameters.name }} project files
+        branch:  ${{ parameters.component | parseEntityRef | pick('name') }}
+        gitCommitMessage: "feat(${{ parameters.system | parseEntityRef | pick('name') }}): Adiciona ${{ parameters.component | parseEntityRef | pick('name') }}"
         gitAuthorName: ${{ user.entity.metadata.name }}
         gitAuthorEmail: ${{ user.entity.spec.profile.email }}
 
@@ -185,11 +185,11 @@ spec:
         organization: Tecnologia_MB
         project: MB
         sourcePath: ./appofapps
-        sourceBranch: ${{ parameters.name }}
+        sourceBranch: ${{ parameters.component | parseEntityRef | pick('name') }}
         targetBranch: "main"
         repoId: b7dd45ce-869b-456f-869e-eded0437c6d1
-        title: Add ${{ parameters.name }} project files
-        gitCommitMessage: Add ${{ parameters.name }} project files
+        title: "feat(${{ parameters.system | parseEntityRef | pick('name') }}): Adiciona ${{ parameters.component | parseEntityRef | pick('name') }}"
+        gitCommitMessage: "feat(${{ parameters.system | parseEntityRef | pick('name') }}): Adiciona ${{ parameters.component | parseEntityRef | pick('name') }}"
         gitAuthorName: ${{ user.entity.metadata.name }}
         gitAuthorEmail: ${{ user.entity.spec.profile.email }}
         supportsIterations: false

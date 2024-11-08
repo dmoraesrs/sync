@@ -4,8 +4,10 @@ import HomeIcon from '@material-ui/icons/Home';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
-import LogoFull from './LogoFull';
-import LogoIcon from './LogoIcon';
+// import LogoFull from './LogoFull';
+// import LogoIcon from './LogoIcon';
+import LogoFullM_Mais from './LogoFullM_Mais';
+import LogoIconM_Mais from './LogoIconM_Mais';
 import {
   Settings as SidebarSettings,
   UserSettingsSignInAvatar,
@@ -50,7 +52,7 @@ const SidebarLogo = () => {
   return (
     <div className={classes.root}>
       <Link to="/" underline="none" className={classes.link} aria-label="Home">
-        {isOpen ? <LogoFull /> : <LogoIcon />}
+        {isOpen ? <LogoFullM_Mais /> : <LogoIconM_Mais />}
       </Link>
     </div>
   );

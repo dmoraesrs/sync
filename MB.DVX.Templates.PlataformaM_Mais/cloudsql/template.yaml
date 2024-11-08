@@ -17,16 +17,8 @@ spec:
     - title: Complete the form to create a new CloudSQL database
       #ui:ObjectFieldTemplate: TwoColumn
       required:
-        - name
         - system
-      properties:
-        name:
-          type: string
-          title: Database Name
-          description: The name of the project
-          ui:autofocus: true
-          maxLength: 50
-          pattern: '^([-a-z0-9]+)*$'           
+      properties:      
         system:
           title: System
           type: string
@@ -36,7 +28,7 @@ spec:
             catalogFilter:
               kind: System
 
-    - title: Select an application for the database
+    - title: Select an Application
       #ui:ObjectFieldTemplate: TwoColumn
       required:
         - component
@@ -44,7 +36,7 @@ spec:
         component:
           title: Application
           type: string
-          description: The resource the component belongs to
+          description: The resource belongs to
           ui:field: EntityPicker
           ui:options:
             allowArbitraryValues: false
@@ -90,9 +82,7 @@ spec:
         targetPath: ./appofapps/sistemas/${{ parameters.system | parseEntityRef | pick('name') }}/manifestos/${{ parameters.component | parseEntityRef | pick('name') }}/templates
         #replace: true
         values:
-          name: ${{ parameters.name }}
           owner: azure_plataformammais_sandbox
-          description: ${{ parameters.description }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
           repoUrl: ${{ parameters.repoUrl }}
           system: ${{ parameters.system | parseEntityRef | pick('name') }}
@@ -104,7 +94,7 @@ spec:
       input:
         sourcePath: ./appofapps
         branch: ${{ parameters.name }}
-        gitCommitMessage: Add ${{ parameters.name }} project files
+        gitCommitMessage: "feat(${{ parameters.system | parseEntityRef | pick('name') }}/${{ parameters.component | parseEntityRef | pick('name') }}): Adiciona CloudSQL"
         gitAuthorName: ${{ user.entity.metadata.name }}
         gitAuthorEmail: ${{ user.entity.spec.profile.email }}
 
@@ -119,8 +109,8 @@ spec:
         sourceBranch: ${{ parameters.name }}
         targetBranch: "main"
         repoId: b7dd45ce-869b-456f-869e-eded0437c6d1
-        title: Add ${{ parameters.name }} project files
-        gitCommitMessage: Add ${{ parameters.name }} project files
+        title: "feat(${{ parameters.system | parseEntityRef | pick('name') }}/${{ parameters.component | parseEntityRef | pick('name') }}): Adiciona CloudSQL"
+        gitCommitMessage: "feat(${{ parameters.system | parseEntityRef | pick('name') }}/${{ parameters.component | parseEntityRef | pick('name') }}): Adiciona CloudSQL"
         gitAuthorName: ${{ user.entity.metadata.name }}
         gitAuthorEmail: ${{ user.entity.spec.profile.email }}
         supportsIterations: false
@@ -130,8 +120,8 @@ spec:
       name: Register
       action: catalog:register
       input:
-        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
-        catalogInfoPath: "/${{ parameters.name }}-catalog-info.yaml"
+        repoContentsUrl: https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
+        catalogInfoPath: "/sistemas/${{ parameters.system | parseEntityRef | pick('name') }}/catalogos/"
 
   # some outputs which are saved along with the job for use in the frontend
   output:
