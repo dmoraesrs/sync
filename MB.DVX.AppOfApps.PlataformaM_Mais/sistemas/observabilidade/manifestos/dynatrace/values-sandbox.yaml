@@ -1,9 +1,9 @@
 apiToken: "ZHQwYzAxLlUzTlBSUDJXRTVJRU82M0VDU0lWWU9BUy5MWTRDQURNRUpKU0FGWlQyUFc0RlVUTFA0TFlWRVc2STVZQlVYNFVVVFM1TTNNNVZZVDVDSkNRN0taNk9QQzVT"
 dataIngestToken: "ZHQwYzAxLkhRUElFVjZQRlhXSTJVT0JIQlFGVkhVRC5XRFU0QldJRVBGQ1pTT0hGNVBUVkNORjJGTEwySFBHS1Q2Qk9UUkxTUTU1NkE1NzROTFZPWEtVWjZBQ0Y1SFVS"
-namespace: "dynatrace"
-networkZone: "sandbox"
-hostGroup: "sandbox"
-activeGateGroup: "sandbox"
+namespace: observabilidade
+networkZone: "plataforma-m-mais-sandbox"
+hostGroup: "plataforma-m-mais-sandbox"
+activeGateGroup: "plataforma-m-mais-sandbox"
 apiUrl: https://uwp39781.live.dynatrace.com/api
 resources:
   requests:

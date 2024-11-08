@@ -39,7 +39,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: dynatrace-oneagent-csi-driver
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -81,7 +81,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: dynatrace-oneagent-csi-driver
-    namespace: dynatrace
+    namespace: observabilidade
 roleRef:
   kind: ClusterRole
   name: dynatrace-oneagent-csi-driver
@@ -105,7 +105,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: dynatrace-oneagent-csi-driver
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -148,7 +148,7 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: dynatrace-oneagent-csi-driver
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -156,7 +156,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: dynatrace-oneagent-csi-driver
-    namespace: dynatrace
+    namespace: observabilidade
 roleRef:
   kind: Role
   name: dynatrace-oneagent-csi-driver
@@ -185,7 +185,7 @@ metadata:
     app.kubernetes.io/version: "1.3.2"
     app.kubernetes.io/component: csi-driver
   name: dynatrace-oneagent-csi-driver
-  namespace: dynatrace
+  namespace: observabilidade
 spec:
   revisionHistoryLimit: 10
   selector:

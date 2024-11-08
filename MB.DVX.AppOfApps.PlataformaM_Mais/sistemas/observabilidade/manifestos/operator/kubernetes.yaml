@@ -5,7 +5,7 @@ apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
   name: dynatrace-webhook
-  namespace: dynatrace
+  namespace: observabilidade
 spec:
   minAvailable: 1
   selector:
@@ -30,7 +30,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: dynatrace-activegate
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -54,7 +54,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: dynatrace-edgeconnect
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -78,7 +78,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: dynatrace-kubernetes-monitoring
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -102,7 +102,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: dynatrace-dynakube-oneagent
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -127,7 +127,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: dynatrace-operator
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -151,7 +151,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: dynatrace-webhook
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -171,7 +171,7 @@ spec:
       clientConfig:
         service:
           name: dynatrace-webhook
-          namespace: dynatrace
+          namespace: observabilidade
           path: /convert
       conversionReviewVersions:
       - v1
@@ -4697,7 +4697,7 @@ spec:
       clientConfig:
         service:
           name: dynatrace-webhook
-          namespace: dynatrace
+          namespace: observabilidade
           path: /convert
       conversionReviewVersions:
       - v1
@@ -6216,7 +6216,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: dynatrace-kubernetes-monitoring
-    namespace: dynatrace
+    namespace: observabilidade
 ---
 # Source: dynatrace-operator/templates/Common/operator/clusterrole-operator.yaml
 apiVersion: rbac.authorization.k8s.io/v1
@@ -6230,7 +6230,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: dynatrace-operator
-    namespace: dynatrace
+    namespace: observabilidade
 roleRef:
   kind: ClusterRole
   name: dynatrace-operator
@@ -6248,7 +6248,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: dynatrace-webhook
-    namespace: dynatrace
+    namespace: observabilidade
 roleRef:
   kind: ClusterRole
   name: dynatrace-webhook
@@ -6272,7 +6272,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: dynatrace-operator
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -6431,7 +6431,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: dynatrace-webhook
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -6476,7 +6476,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: dynatrace-operator
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -6494,7 +6494,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: dynatrace-webhook
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -6502,7 +6502,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: dynatrace-webhook
-    namespace: dynatrace
+    namespace: observabilidade
 roleRef:
   kind: Role
   name: dynatrace-webhook
@@ -6526,7 +6526,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: dynatrace-webhook
-  namespace: dynatrace
+  namespace: observabilidade
   labels:
     app.kubernetes.io/name: dynatrace-operator
     app.kubernetes.io/version: "1.3.2"
@@ -6559,7 +6559,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dynatrace-operator
-  namespace: dynatrace
+  namespace: observabilidade
   annotations:
   labels:
     dynatrace.com/install-source: manifest
@@ -6697,7 +6697,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dynatrace-webhook
-  namespace: dynatrace
+  namespace: observabilidade
   annotations:
   labels:
     app.kubernetes.io/name: dynatrace-operator
@@ -6876,7 +6876,7 @@ webhooks:
     clientConfig:
       service:
         name: dynatrace-webhook
-        namespace: dynatrace
+        namespace: observabilidade
         path: /inject
     admissionReviewVersions: [ "v1beta1", "v1" ]
     sideEffects: None
@@ -6893,7 +6893,7 @@ webhooks:
     clientConfig:
       service:
         name: dynatrace-webhook
-        namespace: dynatrace
+        namespace: observabilidade
         path: /label-ns
     admissionReviewVersions: [ "v1beta1", "v1" ]
     sideEffects: None
@@ -6926,7 +6926,7 @@ webhooks:
     clientConfig:
       service:
         name: dynatrace-webhook
-        namespace: dynatrace
+        namespace: observabilidade
         path: /validate-dynatrace-com-v1beta1-dynakube
     rules:
       - operations:
@@ -6947,7 +6947,7 @@ webhooks:
     clientConfig:
       service:
         name: dynatrace-webhook
-        namespace: dynatrace
+        namespace: observabilidade
         path: /validate-dynatrace-com-v1beta2-dynakube
     rules:
       - operations:
@@ -6968,7 +6968,7 @@ webhooks:
     clientConfig:
       service:
         name: dynatrace-webhook
-        namespace: dynatrace
+        namespace: observabilidade
         path: /validate-dynatrace-com-v1alpha1-edgeconnect
     rules:
       - operations:
@@ -6989,7 +6989,7 @@ webhooks:
     clientConfig:
       service:
         name: dynatrace-webhook
-        namespace: dynatrace
+        namespace: observabilidade
         path: /validate-dynatrace-com-v1alpha2-edgeconnect
     rules:
       - operations:
