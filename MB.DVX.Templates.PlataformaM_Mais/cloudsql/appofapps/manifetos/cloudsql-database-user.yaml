@@ -1,0 +1,14 @@
+apiVersion: database.gcp.crossplane.io/v1alpha1
+kind: User
+metadata:
+  name: db-user
+spec:
+  forProvider:
+    instanceRef:
+      name: postgres-instance
+    passwordSecretRef:
+      name: db-password
+      namespace: crossplane-system
+      key: password
+  providerConfigRef:
+    name: gcp-provider

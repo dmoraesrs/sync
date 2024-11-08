@@ -1,0 +1,12 @@
+apiVersion: database.gcp.crossplane.io/v1alpha1
+kind: Database
+metadata:
+  name: ${{ values.name }}
+spec:
+  forProvider:
+    instanceRef:
+      name: postgres-instance 
+    databaseVersion: POSTGRES_13
+    charset: UTF8
+  providerConfigRef:
+    name: gcp-provider

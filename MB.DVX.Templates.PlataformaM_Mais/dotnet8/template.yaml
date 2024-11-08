@@ -2,7 +2,7 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: dotnet8-template
-  title: Dotnet 8 Template
+  title: .NET 8 Template
   description: Scaffold a new .NET 8 project
   tags:
     - dotnet

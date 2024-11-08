@@ -1,0 +1,5 @@
+apiVersion: v2
+name: dynatrace-helm
+description: A Helm chart for deploying Dynatrace
+version: 0.1.0
+appVersion: "1.0"
