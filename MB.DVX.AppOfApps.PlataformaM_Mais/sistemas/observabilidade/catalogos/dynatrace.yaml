@@ -13,7 +13,7 @@ metadata:
   annotations:
     argocd/project: default
     argocd/app-name: dynatrace
-    backstage.io/kubernetes-namespace: plataforma-m-mais
+    backstage.io/kubernetes-namespace: observabilidade
     backstage.io/kubernetes-id: dynatrace
 spec:
   type: service
