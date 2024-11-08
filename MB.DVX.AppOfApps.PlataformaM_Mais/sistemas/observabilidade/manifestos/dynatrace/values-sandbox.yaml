@@ -1,6 +1,14 @@
 apiToken: "ZHQwYzAxLlUzTlBSUDJXRTVJRU82M0VDU0lWWU9BUy5MWTRDQURNRUpKU0FGWlQyUFc0RlVUTFA0TFlWRVc2STVZQlVYNFVVVFM1TTNNNVZZVDVDSkNRN0taNk9QQzVT"
 dataIngestToken: "ZHQwYzAxLkhRUElFVjZQRlhXSTJVT0JIQlFGVkhVRC5XRFU0QldJRVBGQ1pTT0hGNVBUVkNORjJGTEwySFBHS1Q2Qk9UUkxTUTU1NkE1NzROTFZPWEtVWjZBQ0Y1SFVS"
-namespace: "Observabilidade"
+namespace: "observabilidade"
 networkZone: "sandbox"
 hostGroup: "sandbox"
 activeGateGroup: "sandbox"
+apiUrl: https://uwp39781.live.dynatrace.com/api
+resources:
+  requests:
+    cpu: 500m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 1.5Gi

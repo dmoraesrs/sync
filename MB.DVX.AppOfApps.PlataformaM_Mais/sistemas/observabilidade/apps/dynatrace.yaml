@@ -11,12 +11,12 @@ spec:
       path: sistemas/observabilidade/manifestos/operator
       directory:
         recurse: false
-#    - repoURL: https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
-#      path: sistemas/observabilidade/manifestos/dynatrace
-#      targetRevision: HEAD
-#      helm:
-#        valueFiles:
-#          - values-sandbox.yaml
+    - repoURL: https://devops.mercantil.com.br/Tecnologia_MB/MB/_git/MB.DVX.AppOfApps.PlataformaM_Mais
+      path: sistemas/observabilidade/manifestos/dynatrace
+      targetRevision: HEAD
+      helm:
+        valueFiles:
+          - values-sandbox.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: observabilidade
